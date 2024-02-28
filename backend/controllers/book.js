@@ -90,8 +90,8 @@ exports.createRating = (req, res, next) => {
         };
         book.ratings.push(rating);
         book.averageRating = Math.round(
-          book.ratings.reduce((a, b) => a + b.grade, 0) / book.ratings.length
-        );
+          (book.ratings.reduce((a, b) => a + b.grade, 0) / book.ratings.length) * 10
+        ) / 10;
         book
           .save()
           .then((book) => res.status(200).json(book))
