@@ -9,7 +9,11 @@ const cors = require('cors');
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/?retryWrites=true&w=majority`,
 { useNewUrlParser: true,
   useUnifiedTopology: true })
-.then(() => console.log('Connexion à MongoDB réussie !'))
+.then(() => 
+  app.listen(process.env.PORT, () => {
+    console.log(`Connexion à MongoDB réussie sur le port ${process.env.PORT}`)
+  })
+  )
 .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 
