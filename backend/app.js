@@ -1,30 +1,49 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const app = express();
-const bookRoutes = require('./routes/book');
-const userRoutes = require('./routes/user');
-const path = require('path');
-const cors = require('cors');
+/*
+const http = require('http');
+const app = require('./app');
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/?retryWrites=true&w=majority`,
-{ useNewUrlParser: true,
-  useUnifiedTopology: true })
-.then(() => 
-  app.listen(process.env.PORT, () => {
-    console.log(`Connexion à MongoDB réussie sur le port ${process.env.PORT}`)
-  })
-  )
-.catch(() => console.log('Connexion à MongoDB échouée !'));
+const normalizePort = val => {
+  const port = parseInt(val, 10);
 
+  if (isNaN(port)) {
+    return val;
+  }
+  if (port >= 0) {
+    return port;
+  }
+  return false;
+};
+const port = normalizePort(process.env.PORT);
+app.set('port', port);
 
-app.use(express.json());
+const errorHandler = error => {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+  const address = server.address();
+  const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges.');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use.');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+};
 
-app.use(cors());
+const server = http.createServer(app);
 
-app.use('/api/auth', userRoutes);
-app.use('/api/books', bookRoutes);
+server.on('error', errorHandler);
+server.on('listening', () => {
+  const address = server.address();
+  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
+  console.log('Listening on ' + bicnd);
+});
 
-
-app.use('/images', express.static(path.join(__dirname, 'images')));
-
-module.exports = app;
+server.listen(port);
+*/

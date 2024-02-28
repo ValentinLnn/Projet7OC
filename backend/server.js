@@ -1,49 +1,29 @@
-/*
-const http = require('http');
-const app = require('./app');
+const express = require('express');
+const mongoose = require('mongoose');
+const app = express();
+const bookRoutes = require('./routes/book');
+const userRoutes = require('./routes/user');
+const path = require('path');
+const cors = require('cors');
 
-const normalizePort = val => {
-  const port = parseInt(val, 10);
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/?retryWrites=true&w=majority`,
+{ useNewUrlParser: true,
+  useUnifiedTopology: true })
+.then(() => {
+  console.log('Connexion à la BDD OK !'),
+  app.listen(process.env.PORT, () => {
+    console.log(`Connexion à MongoDB réussie sur le port ${process.env.PORT}`)
+  })
+})
+.catch(error => console.log('Connexion à MongoDB échouée !', error));
 
-  if (isNaN(port)) {
-    return val;
-  }
-  if (port >= 0) {
-    return port;
-  }
-  return false;
-};
-const port = normalizePort(process.env.PORT);
-app.set('port', port);
 
-const errorHandler = error => {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-  const address = server.address();
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges.');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use.');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-};
+app.use(express.json());
 
-const server = http.createServer(app);
+app.use(cors());
 
-server.on('error', errorHandler);
-server.on('listening', () => {
-  const address = server.address();
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
-  console.log('Listening on ' + bicnd);
-});
+app.use('/api/auth', userRoutes);
+app.use('/api/books', bookRoutes);
 
-server.listen(port);
-*/
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
