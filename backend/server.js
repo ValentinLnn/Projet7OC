@@ -6,11 +6,11 @@ const userRoutes = require('./routes/user');
 const path = require('path');
 const cors = require('cors');
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/?retryWrites=true&w=majority`,
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}/?retryWrites=true&w=majority`,
 { useNewUrlParser: true,
   useUnifiedTopology: true })
 .then(() => {
-  console.log('Connexion à la BDD OK !'),
+  console.log('Connexion à la BDD OK !');
   app.listen(process.env.PORT, () => {
     console.log(`Connexion à MongoDB réussie sur le port ${process.env.PORT}`)
   })
